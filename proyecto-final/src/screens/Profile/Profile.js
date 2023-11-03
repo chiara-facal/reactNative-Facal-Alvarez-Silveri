@@ -32,11 +32,11 @@ render(){
         <View>
             <Text>Mi perfil</Text>
             {this.state.infoUsuario.length === 0?
-            <ActivityIndicator size='large' color='pink'/>:
-            <FlatList
+            (<ActivityIndicator size='large' color='pink'/>):
+            (<FlatList
             data = {this.state.infoUsuario}
             keyExtractor={user => user.id}
-            renderItem = {({item}) => <User info = {item}/>}/>}
+            renderItem = {({item}) => <User info = {item}/>}/>)}
         </View>
     )
 }

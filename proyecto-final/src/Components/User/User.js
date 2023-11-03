@@ -25,9 +25,9 @@ render(){
          {/* Mostrar todos los posteos */}
          {/* Poder borrar posteo si es el dueño de ellos */}
         {this.props.info.datos.owner == auth.currentUser.email ? 
-        <TouchableOpacity onPress={() => this.logOut()}>
+        (<TouchableOpacity onPress={() => this.logOut()}>
             <Text>Salir</Text>
-        </TouchableOpacity>: ""}
+        </TouchableOpacity>): ""}
         </View>
     )
 }
