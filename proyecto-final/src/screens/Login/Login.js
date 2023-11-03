@@ -14,6 +14,15 @@ class Login extends Component {
         }
     }
 
+    componentDidMount(){
+        auth.onAuthStateChanged( user => {
+            if( user ){
+                this.props.navigation.navigate('Home')
+            }
+
+        } )
+    }
+
     login (email, pass){
         auth.signInWithEmailAndPassword(email, pass)
             .then( response => {
@@ -67,7 +76,7 @@ class Login extends Component {
                     <Text style={styles.textButton}>Ingresar</Text>    
                 </TouchableOpacity>
                 <TouchableOpacity onPress={ () => this.props.navigation.navigate('Registro')}>
-                   <Text>Ingresar</Text>
+                   <Text>Registrarse</Text>
                 </TouchableOpacity>
             </View>
         )
