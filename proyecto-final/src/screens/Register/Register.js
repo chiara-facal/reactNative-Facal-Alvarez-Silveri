@@ -9,7 +9,7 @@ class Register extends Component {
             email:'',
             userName:'',
             password:'',
-            MiniBio:'',
+            miniBio:'',
             emailError: '',
             passwordError: '', 
             generalError: '',

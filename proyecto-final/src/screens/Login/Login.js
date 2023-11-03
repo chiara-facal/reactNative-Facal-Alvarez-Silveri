@@ -7,7 +7,10 @@ class Login extends Component {
         super()
         this.state={
             email:'',
-            password:''
+            password:'',
+            emailErrorl:'',
+            passwordErrorl:'',
+            botonDeshabilitado: true,
         }
     }
 
@@ -27,7 +30,16 @@ class Login extends Component {
             .catch( error => {
                 //Cuando Firebase responde con un error.
                 console.log(error);
-            })
+                if (error.code === 'auth/invalid-email') {
+                    this.setState({ emailErrorl: 'El correo electrónico no es válido' });
+                  } else if (error.code === 'auth/wrong-password')
+                  {this.setState({ passwordErrorl: 'Email invalido, inténtelo nuevamente con un usuario existente.' });
+                 } else if (error.code === 'auth/internal-error')
+                 {this.setState({ passwordErrorl: 'El usuario y la contraseña no coinciden' });
+                 } else if (error.code === 'auth/wrong-password')
+                 {this.setState({ passwordErrorl: 'Contraseña incorrecta' });
+                }
+                });
     }
 
     render(){
@@ -41,6 +53,7 @@ class Login extends Component {
                     keyboardType='email-address'
                     value={this.state.email}
                     />
+                <Text>{this.state.emailErrorl}</Text>    
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({password: text})}
@@ -49,11 +62,12 @@ class Login extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
+                <Text>{this.state.passwordErrorl}</Text>
                 <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state.email, this.state.password)}>
                     <Text style={styles.textButton}>Ingresar</Text>    
                 </TouchableOpacity>
                 <TouchableOpacity onPress={ () => this.props.navigation.navigate('Registro')}>
-                   <Text>Registrarme.</Text>
+                   <Text>Ingresar</Text>
                 </TouchableOpacity>
             </View>
         )
