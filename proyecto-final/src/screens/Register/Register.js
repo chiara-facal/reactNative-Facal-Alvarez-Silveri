@@ -1,5 +1,6 @@
 import react, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
+import { Camera } from 'expo-camera'
 import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 
 class Register extends Component {
@@ -17,14 +18,10 @@ class Register extends Component {
         }
     }
     componentDidMount(){
-        console.log("Chequear si el usuario está loguado en firebase.");
-        // Puse la funcionalidad aquí para probarla. No necesariamente debe ir en este componente.
 
         auth.onAuthStateChanged( user => {
-            console.log(user)
             if( user ){
-                //Redirigir al usuario a la home del sitio.
-                this.props.navigation.navigate('Home')
+                this.props.navigation.navigate('Login')
             }
 
         } )
@@ -37,12 +34,8 @@ class Register extends Component {
         }
         auth.createUserWithEmailAndPassword(email, pass)
             .then( response => {
-                //Cuando firebase responde sin error
                 console.log('Registrado ok', response);
 
-                 //Cambiar los estados a vacío como están al inicio.
-
-                 //Crear la colección Users
                 db.collection('users').add({
                     owner: auth.currentUser.email,
                     userName: userName,
@@ -53,7 +46,6 @@ class Register extends Component {
 
             })
             .catch((error) => {
-                // Registro fallido
                 console.log(error);
                 if (error.code === 'auth/invalid-email') {
                   this.setState({ emailError: 'El correo electrónico no es válido' });
@@ -100,10 +92,10 @@ class Register extends Component {
                  <Text>{this.state.passwordError}</Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={(text)=>this.setState({MiniBio: text})}
+                    onChangeText={(text)=>this.setState({miniBio: text})}
                     placeholder='Mini Bio (Opcional)'
                     keyboardType='default'
-                    value={this.state.MiniBio}
+                    value={this.state.miniBio}
                     />
                 <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName)}>
                     <Text style={styles.textButton}>Registrarse</Text>  
