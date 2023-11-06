@@ -11,14 +11,10 @@ class Register extends Component {
             userName:'',
             password:'',
             miniBio:'',
-            emailError: '',
-            passwordError: '', 
-            generalError: '',
-            usernameError:'',
+            errorMessage: '',
         }
     }
     componentDidMount(){
-
         auth.onAuthStateChanged( user => {
             if( user ){
                 this.props.navigation.navigate('Login')
@@ -29,9 +25,17 @@ class Register extends Component {
     }
 
     register (email, pass, userName){
-        if (userName == '') {
-            this.setState({usernameError:'Es obligatorio el nombre de usuario'})
+        this.setState({
+            errorMessage: ''
+        })
+        if(this.state.email == '' || this.state.email.includes("@") == false){
+            return this.setState({errorMessage: "Es obligatorio ingresar un mail"})
+        }else if (this.state.userName == '') {
+            return this.setState({errorMessage:'Es obligatorio el nombre de usuario'})
+        }else if (this.state.password == '' || this.state.password.length <6){
+            return this.setState({errorMessage: "Es obligatoria la contraseña"})
         }
+       
         auth.createUserWithEmailAndPassword(email, pass)
             .then( response => {
                 console.log('Registrado ok', response);
@@ -46,18 +50,19 @@ class Register extends Component {
 
             })
             .catch((error) => {
-                console.log(error);
-                if (error.code === 'auth/invalid-email') {
-                  this.setState({ emailError: 'El correo electrónico no es válido' });
-                } else if (error.code === 'auth/weak-password')
-                 {this.setState({ passwordError: 'La contraseña debe tener al menos 6 caracteres' });
-                }  else if (error.code === 'auth/email-already-in-use') {
-                    this.setState({emailError: 'El email introducido ya esta en uso'})
+                // console.log(error);
+                this.setState({
+                    errorMessage: ''
+                })
+                if (error.code === 'auth/email-already-in-use') {
+                    return this.setState({errorMessage: 'El email introducido ya esta en uso'})
+                } else if (error.code === 'auth/invalid-email') {
+                    return this.setState({ errorMessage: 'El correo electrónico no es válido' })
                 } else {
-                  this.setState({ generalError: 'Hubo un error en el registro. Inténtalo de nuevo.' });
-                }
-              });
-    }
+                  return this.setState({ errorMessage: 'Hubo un error en el registro. Inténtalo de nuevo.' })
+                } 
+        })}
+
 
 
 
@@ -72,7 +77,6 @@ class Register extends Component {
                     keyboardType='email-address'
                     value={this.state.email}
                     />
-                <Text>{this.state.emailError}</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({userName: text})}
@@ -80,7 +84,7 @@ class Register extends Component {
                     keyboardType='default'
                     value={this.state.userName}
                     />
-                 <Text>{this.state.usernameError}</Text>
+                 {/* <Text>{this.state.usernameError}</Text> */}
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({password: text})}
@@ -89,7 +93,7 @@ class Register extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
-                 <Text>{this.state.passwordError}</Text>
+                 {/* <Text>{this.state.passwordError}</Text> */}
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({miniBio: text})}
@@ -97,9 +101,12 @@ class Register extends Component {
                     keyboardType='default'
                     value={this.state.miniBio}
                     />
+                    {this.state.errorMessage !== '' ?
+                    <Text>{this.state.errorMessage}</Text>
+                    : false
+                }
                 <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName)}>
-                    <Text style={styles.textButton}>Registrarse</Text>  
-                <Text>{this.state.generalError}</Text>  
+                    <Text style={styles.textButton}>Registrarse</Text>    
                 </TouchableOpacity>
                 <TouchableOpacity style = {styles.button} onPress={ () => this.props.navigation.navigate('Login')}>
                    <Text style = {styles.textButton}>Ya tengo una cuenta</Text>

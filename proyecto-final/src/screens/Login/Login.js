@@ -11,6 +11,7 @@ class Login extends Component {
             emailErrorl:'',
             passwordErrorl:'',
             botonDeshabilitado: true,
+            errorMessage: ''
         }
     }
 
@@ -24,29 +25,33 @@ class Login extends Component {
     }
 
     login (email, pass){
+        this.setState({
+            errorMessage: ''
+        })
+        if(this.state.email == '' || this.state.email.includes("@") == false){
+            return this.setState({errorMessage: "Es obligatorio ingresar un mail"})
+        }else if(this.state.password == '' || this.state.password.length <6){
+            return this.setState({errorMessage: "Es obligatoria la contraseña"})
+        }
         auth.signInWithEmailAndPassword(email, pass)
             .then( response => {
-                //Cuando firebase responde sin error
                 console.log('Login ok', response);
-
-                //Cambiar los estados a vacío como están al inicio.
-
-
-                //Redirigir al usuario a la home del sitio.
                 this.props.navigation.navigate('Menu')
 
             })
             .catch( error => {
-                //Cuando Firebase responde con un error.
                 console.log(error);
+                this.setState({
+                    errorMessage: ''
+                })
                 if (error.code === 'auth/invalid-email') {
-                    this.setState({ emailErrorl: 'El correo electrónico no es válido' });
-                  } else if (error.code === 'auth/wrong-password')
-                  {this.setState({ passwordErrorl: 'Email invalido, inténtelo nuevamente con un usuario existente.' });
-                 } else if (error.code === 'auth/internal-error')
-                 {this.setState({ passwordErrorl: 'El usuario y la contraseña no coinciden' });
+                    return this.setState({ errorMessage: 'El correo electrónico no es válido' });
+                  } else if (error.code === 'auth/wrong-password'){
+                  return this.setState({ errorMessage: 'Email invalido, inténtelo nuevamente con un usuario existente.' });
+                 } else if (error.code === 'auth/internal-error') {
+                 return this.setState({ errorMessage: 'El usuario y la contraseña no coinciden' });
                  } else if (error.code === 'auth/wrong-password')
-                 {this.setState({ passwordErrorl: 'Contraseña incorrecta' });
+                 { return this.setState({ errorMessage: 'Contraseña incorrecta' });
                 }
                 });
     }
@@ -61,8 +66,7 @@ class Login extends Component {
                     placeholder='Email'
                     keyboardType='email-address'
                     value={this.state.email}
-                    />
-                <Text>{this.state.emailErrorl}</Text>    
+                    />   
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({password: text})}
@@ -71,7 +75,7 @@ class Login extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
-                <Text>{this.state.passwordErrorl}</Text>
+                <Text>{this.state.errorMessage}</Text>
                 <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state.email, this.state.password)}>
                     <Text style={styles.textButton}>Ingresar</Text>    
                 </TouchableOpacity>
