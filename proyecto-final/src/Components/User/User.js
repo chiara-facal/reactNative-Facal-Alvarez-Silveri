@@ -19,7 +19,7 @@ render(){
         <View>
             <Text>Usuario: {this.props.info.datos.userName}</Text>
             <Text>Email: {this.props.info.datos.owner}</Text>
-         {/* mini bio */}
+            <Text>Minio bio: {this.props.info.datos.miniBio}</Text>
          {/* Foto de perfil */}
          {/* Cantidad de posteos */}
          {/* Mostrar todos los posteos */}
