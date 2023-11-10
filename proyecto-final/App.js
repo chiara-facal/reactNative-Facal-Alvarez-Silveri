@@ -6,6 +6,7 @@ import Profile from './src/screens/Profile/Profile';
 import Search from './src/screens/Search/Search';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Menu from './src/Components/Menu/Menu';
 
 export default function App() {
 
@@ -17,6 +18,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name='Register' component={Register} options={ { headerShown: false } }/>
         <Stack.Screen name='Login' component={Login} options={ { headerShown: false } }/>
+        <Stack.Screen name='Menu' component={Menu} options={ { headerShown: false } }/>
         {/* Si implementamos tabnavigation para el resto de la app. El tercer componente debe ser una navegación que tenga a Home como primer screen */}
       </Stack.Navigator>
     </NavigationContainer>
