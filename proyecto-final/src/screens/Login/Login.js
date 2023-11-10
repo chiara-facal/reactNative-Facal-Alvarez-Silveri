@@ -79,7 +79,7 @@ class Login extends Component {
                 <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state.email, this.state.password)}>
                     <Text style={styles.textButton}>Ingresar</Text>    
                 </TouchableOpacity>
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Registro')}>
+                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Register')}>
                    <Text>Registrarse</Text>
                 </TouchableOpacity>
             </View>
