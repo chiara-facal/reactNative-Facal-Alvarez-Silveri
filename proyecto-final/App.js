@@ -13,11 +13,9 @@ export default function App() {
     
     <NavigationContainer style={styles.container}>
       <Stack.Navigator>
-        <Stack.Screen name='Registro' component={Register} options={ { headerShown: false } }/>
+        <Stack.Screen name='Register' component={Register} options={ { headerShown: false } }/>
         <Stack.Screen name='Login' component={Login} options={ { headerShown: false } }/>
-        <Stack.Screen name='Home' component={Profile} options={ { headerShown: true} }/>
-        <Stack.Screen name='Home' component={Search} options={ { headerShown: true } }/>
-
+        {/* Si implementamos tabnavigation para el resto de la app. El tercer componente debe ser una navegación que tenga a Home como primer screen */}
       </Stack.Navigator>
     </NavigationContainer>
 
