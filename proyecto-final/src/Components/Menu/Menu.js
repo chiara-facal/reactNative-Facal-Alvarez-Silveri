@@ -9,8 +9,8 @@ import {
   FlatList 
 } from "react-native";
 import Home from "../../screens/Home/Home";
-import User from "../User/User";
 import NewPost from "../../screens/NewPost/NewPost";
+import Profile from "../../screens/Profile/Profile";
 
 const Tab = createBottomTabNavigator()
 
@@ -26,7 +26,7 @@ class Menu extends Component {
         <Tab.Navigator>
             <Tab.Screen name="Home" component={Home}/>
             <Tab.Screen name="NewPost" component={NewPost}/>
-            <Tab.Screen name="User" component={User}/>
+            <Tab.Screen name="Profile" component={Profile}/>
         </Tab.Navigator>
     );
   }

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import { auth, db } from "../../firebase/config";
+import MyCamera from '../../Components/MyCamera/Mycamera'
 
 class NewPost extends Component {
     constructor() {
@@ -27,11 +28,21 @@ class NewPost extends Component {
         .catch(error => console.log(`El error fue: ${error}`))
       }
 
+      onImageUpload(url){
+        this.setState({
+            url:url,
+            showCamera: false
+        })
+    }
+
     render() {
         console.log(this.state.users);
         return (
           <View>
             <Text>PostForm</Text>
+
+            {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)}/> :
+            <>
             <TextInput
               style={styles.input}
               onChangeText={(text) => this.setState({ post: text })}
@@ -45,7 +56,7 @@ class NewPost extends Component {
             >
               <Text style={styles.textButton}>Postear</Text>
             </TouchableOpacity>
-            
+            </>}
           </View>
         );
       }
