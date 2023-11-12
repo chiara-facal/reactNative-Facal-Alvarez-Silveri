@@ -1,6 +1,6 @@
 import react, { Component } from 'react';
 import { auth } from '../../firebase/config';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 
 class Login extends Component {
     constructor(){
@@ -11,7 +11,8 @@ class Login extends Component {
             emailErrorl:'',
             passwordErrorl:'',
             botonDeshabilitado: true,
-            errorMessage: ''
+            errorMessage: '',
+            cargando: true
         }
     }
 
@@ -19,6 +20,8 @@ class Login extends Component {
         auth.onAuthStateChanged( user => {
             if( user ){
                 this.props.navigation.navigate('Menu')
+            } else {
+                this.setState({cargando: false})
             }
 
         } )
@@ -57,6 +60,15 @@ class Login extends Component {
     }
 
     render(){
+        if(this.state.cargando){
+            return(
+                <View>
+                <ActivityIndicator size='large' color='pink'/>
+                <Text>Cargando...</Text>
+                </View>
+
+            )
+        }else{
         return(
             <View style={styles.formContainer}>
                 <Text>Login</Text>
@@ -84,7 +96,7 @@ class Login extends Component {
                 </TouchableOpacity>
             </View>
         )
-    }
+    }}
 }
 
 const styles = StyleSheet.create({

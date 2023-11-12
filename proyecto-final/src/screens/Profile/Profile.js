@@ -8,40 +8,66 @@ class Profile extends Component {
     constructor(){
         super();
         this.state = 
-        {infoUsuario: []}
+        {infoUsuario: [],
+        postUsuario: []
+    
+    }
     }
 
 componentDidMount(){
-    if(auth.currentUser){
-  db.collection('users').where('owner', '==',auth.currentUser.email).onSnapshot(
-        usuarios => {
-            let users = [];
-            usuarios.forEach(user =>
-                {users.push({
-                    id: user.id,
-                    datos: user.data()
-                })})
+    auth.onAuthStateChanged( user => {
+        if( user ){
+            db.collection('users').where('owner', '==',auth.currentUser.email).onSnapshot(
+                usuarios => {
+                    let users = [];
+                    usuarios.forEach(user =>
+                        {users.push({
+                            id: user.id,
+                            datos: user.data()
+                        })})
+                
+                this.setState({
+                    infoUsuario: users
+                })
+            }
+            )
+        } else{
+            this.props.navigation.navigate('Login')
+        }
+
+        db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
+            posteos => {
+                let publicaciones = [];
+                posteos.forEach(post =>
+                    {publicaciones.push({
+                        id: post.id,
+                        datos: post.data()
+                    })})
+                this.setState({
+                    postUsuario: publicaciones
+                })
+            }
+        )
         
-        this.setState({
-            infoUsuario: users
-        })
+  
     }
+    
     )
-    }
   
 }
 render(){
-    return(
-        <View>
-            <Text>Mi perfil</Text>
-            {this.state.infoUsuario.length === 0?
-            (<ActivityIndicator size='large' color='pink'/>):
-            (<FlatList
-            data = {this.state.infoUsuario}
-            keyExtractor={user => user.id}
-            renderItem = {({item}) => <User info = {item}/>}/>)}
-        </View>
-    )
+        return(
+            <View>
+                <Text>Mi perfil</Text>
+                {this.state.infoUsuario.length === 0?
+                (<ActivityIndicator size='large' color='pink'/>):
+                (<FlatList
+                data = {this.state.infoUsuario}
+                keyExtractor={user => user.id}
+                renderItem = {({item}) => <User info = {item} posteos = {this.state.postUsuario}/>}/>)}
+            </View>
+)
+    
 }
 
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
 import { Camera } from 'expo-camera'
-import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 
 class Register extends Component {
     constructor(){
@@ -12,12 +12,15 @@ class Register extends Component {
             password:'',
             miniBio:'',
             errorMessage: '',
+            cargando: true
         }
     }
     componentDidMount(){
         auth.onAuthStateChanged( user => {
             if( user ){
                 this.props.navigation.navigate('Login')
+            }else {
+                this.setState({cargando: false})
             }
 
         } )
@@ -68,6 +71,15 @@ class Register extends Component {
 
 
     render(){
+        if(this.state.cargando){
+            return(
+                <View>
+                <ActivityIndicator size='large' color='pink'/>
+                <Text>Cargando...</Text>
+                </View>
+
+            )
+        }else{
         return(
             <View style={styles.formContainer}>
                 <Text>Registrarse</Text>
@@ -114,7 +126,7 @@ class Register extends Component {
                 </TouchableOpacity>
             </View>
         )
-    }
+    }}
 }
 
 const styles = StyleSheet.create({
