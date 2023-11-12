@@ -2,8 +2,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './src/screens/Login/Login';
 import Register from './src/screens/Register/Register';
-import Profile from './src/screens/Profile/Profile';
-import Search from './src/screens/Search/Search';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Menu from './src/Components/Menu/Menu';

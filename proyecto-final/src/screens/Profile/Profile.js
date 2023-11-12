@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { auth, db } from '../../firebase/config';
-import {View, Text, ActivityIndicator, FlatList} from 'react-native';
+import { View, Text, ActivityIndicator, FlatList } from 'react-native';
 import User from '../../Components/User/User';
 
 
@@ -12,7 +12,8 @@ class Profile extends Component {
     }
 
 componentDidMount(){
-    db.collection('users').where('owner', '==',auth.currentUser.email).onSnapshot(
+    if(auth.currentUser){
+  db.collection('users').where('owner', '==',auth.currentUser.email).onSnapshot(
         usuarios => {
             let users = [];
             usuarios.forEach(user =>
@@ -26,6 +27,8 @@ componentDidMount(){
         })
     }
     )
+    }
+  
 }
 render(){
     return(

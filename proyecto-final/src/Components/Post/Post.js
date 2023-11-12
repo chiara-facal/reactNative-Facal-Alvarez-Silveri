@@ -1,53 +1,39 @@
-import react, { Component } from 'react';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
-import { auth, db } from '../../firebase/config';
-import firebase from 'firebase';
+import React, { Component } from 'react';
+import {View, Text} from 'react-native';
+import {auth } from '../../firebase/config';
 
 class Post extends Component {
     constructor(props){
         super(props)
         this.state={
-            img: '',
-            description: '',
-            date: '',
-            email: '',
-            likes: '',
-            comments: '',
+            usuarioLogueado: false
         }
     }
     
-    
+    componentDidMount(){
+        auth.onAuthStateChanged( user => {
+            if( user ){
+                this.setState({
+                    usuarioLogueado: true
+                })
+            }
 
-    crearPost(){
-        db.collection('posts').add({
-            owner: auth.currentUser.email,
-            description: this.state.description,
-            likes: [],
-            img: '',
-            createdAt: Date.now(),
-        })
-        .then()
-        .catch(err => console.log(e))
+        } )
+
     }
 
-    
-
     render(){
-        if (users == datos.currentUser) {
+        if (this.state.usuarioLogueado) {
             return (
                 <View>
-                    <Text>----------------------------------------------------</Text>
-                        <Text>Datos del Post</Text>
-                        <Text>Email: {this.props.infoPost.datos.owner}</Text>
-                        <Text>Texto: {this.props.infoPost.datos.post}</Text>
-                        
-                    <TouchableOpacity></TouchableOpacity>
+                        <Text>{this.props.infoPost.datos.owner}</Text>
+                        <Text>{this.props.infoPost.datos.post}</Text>
                 </View>
                )
                
-        } else () => {
+        } else {
             return (
-                <Text>No estas logueado</Text>
+                <Text>El usuario debe estar logueado para ver los posteos</Text>
             )
         }
        

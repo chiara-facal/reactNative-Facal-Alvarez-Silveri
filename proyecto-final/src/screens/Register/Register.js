@@ -1,4 +1,4 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
 import { Camera } from 'expo-camera'
 import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
@@ -24,7 +24,7 @@ class Register extends Component {
 
     }
 
-    register (email, pass, userName){
+    register (email, pass, userName, miniBio){
         this.setState({
             errorMessage: ''
         })
@@ -43,6 +43,7 @@ class Register extends Component {
                 db.collection('users').add({
                     owner: auth.currentUser.email,
                     userName: userName,
+                    miniBio: miniBio,
                     createdAt: Date.now(), 
                 })
                 .then( res => console.log(res))
@@ -105,7 +106,7 @@ class Register extends Component {
                     <Text>{this.state.errorMessage}</Text>
                     : false
                 }
-                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName)}>
+                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio)}>
                     <Text style={styles.textButton}>Registrarse</Text>    
                 </TouchableOpacity>
                 <TouchableOpacity style = {styles.button} onPress={ () => this.props.navigation.navigate('Login')}>

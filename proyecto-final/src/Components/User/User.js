@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import { auth } from '../../firebase/config';
 
 class User extends Component{
@@ -10,8 +10,8 @@ class User extends Component{
         }
     }
 logOut(){
-    auth.signOut();
-    this.props.navigation.navigate("Login")
+    auth.signOut()
+    this.props.navigation.navigate('Login');
 }
 
 render(){
@@ -19,7 +19,7 @@ render(){
         <View>
             <Text>Usuario: {this.props.info.datos.userName}</Text>
             <Text>Email: {this.props.info.datos.owner}</Text>
-            <Text>Minio bio: {this.props.info.datos.miniBio}</Text>
+            <Text>Mini bio: {this.props.info.datos.miniBio}</Text>
          {/* Foto de perfil */}
          {/* Cantidad de posteos */}
          {/* Mostrar todos los posteos */}
