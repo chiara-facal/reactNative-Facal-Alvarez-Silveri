@@ -12,15 +12,13 @@ class Register extends Component {
             password:'',
             miniBio:'',
             errorMessage: '',
-            showCamera: false, 
-            url: '',
             cargando: true
         }
     }
     componentDidMount(){
         auth.onAuthStateChanged( user => {
             if( user ){
-                this.props.navigation.navigate('Login')
+                this.props.navigation.navigate('Image')
             }else {
                 this.setState({cargando: false})
             }
@@ -53,7 +51,7 @@ class Register extends Component {
                     createdAt: Date.now()
                      
                 })
-                .then( res => console.log(res))
+                .then()
 
 
             })
@@ -72,12 +70,7 @@ class Register extends Component {
         })}
 
 
-        onImageUpload(url){
-            this.setState({ url: url , showCamera: false});
-          }
-
-
-
+        
     render(){
         if(this.state.cargando){
             return(
@@ -113,17 +106,14 @@ class Register extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
-                <TextInput
+                {/* <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({userName: text})}
                     placeholder='Foto de perfil'
                     keyboardType='default'
                     value={this.state.photo}
-                    />
-                 <TouchableOpacity onPress={() =>this.setState({showCamera: true}) }>
-                     <Text>Agregar foto (opcional)</Text>
-                    </TouchableOpacity>
-                 {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : <Text></Text>}
+                    /> */}
+        
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({miniBio: text})}
