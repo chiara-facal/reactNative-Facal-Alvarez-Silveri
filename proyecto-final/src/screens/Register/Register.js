@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
-import { Camera } from 'expo-camera'
+import MyCamera from '../../Components/MyCamera/Mycamera';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 
 class Register extends Component {
@@ -12,7 +12,8 @@ class Register extends Component {
             password:'',
             miniBio:'',
             errorMessage: '',
-            camara: '',
+            showCamera: false, 
+            url: '',
             cargando: true
         }
     }
@@ -48,7 +49,9 @@ class Register extends Component {
                     owner: auth.currentUser.email,
                     userName: userName,
                     miniBio: miniBio,
-                    createdAt: Date.now(), 
+                    photo: this.state.url,
+                    createdAt: Date.now()
+                     
                 })
                 .then( res => console.log(res))
 
@@ -68,6 +71,10 @@ class Register extends Component {
                 } 
         })}
 
+
+        onImageUpload(url){
+            this.setState({ url: url , showCamera: false});
+          }
 
 
 
@@ -98,7 +105,6 @@ class Register extends Component {
                     keyboardType='default'
                     value={this.state.userName}
                     />
-                 {/* <Text>{this.state.usernameError}</Text> */}
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({password: text})}
@@ -107,7 +113,17 @@ class Register extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
-                 {/* <Text>{this.state.passwordError}</Text> */}
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(text)=>this.setState({userName: text})}
+                    placeholder='Foto de perfil'
+                    keyboardType='default'
+                    value={this.state.photo}
+                    />
+                 <TouchableOpacity onPress={() =>this.setState({showCamera: true}) }>
+                     <Text>Agregar foto (opcional)</Text>
+                    </TouchableOpacity>
+                 {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : <Text></Text>}
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({miniBio: text})}
