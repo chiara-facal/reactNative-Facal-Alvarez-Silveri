@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { TouchableOpacity, View, Text, FlatList } from 'react-native';
-import { auth } from '../../firebase/config';
+import { auth, db} from '../../firebase/config';
+import firebase from 'firebase';
 
 class User extends Component{
     constructor(props){
@@ -15,6 +16,15 @@ logOut(){
     auth.signOut()
     this.props.navigation.navigate('Login');
 }
+
+borrarPost(id){
+    db.collection('posts').doc(id).delete()
+    .then(()=>{
+        console.log("Post eliminado")
+    })
+    .catch((error) =>{
+        console.log(error)
+    })}
 
 render(){
     return(
@@ -34,6 +44,10 @@ render(){
                     <View>
                         <Text>Posteos</Text>
                         <Text>Descripción: {item.datos.post}</Text>
+                        {this.props.info.datos.owner == auth.currentUser.email ? 
+                        (<TouchableOpacity onPress={() => this.borrarPost(item.id)}>
+                        <Text>Borrar posteo</Text>        
+                        </TouchableOpacity>): ""}
                     </View>
                 )}/>)}
             {this.props.info.datos.owner == auth.currentUser.email ? 
