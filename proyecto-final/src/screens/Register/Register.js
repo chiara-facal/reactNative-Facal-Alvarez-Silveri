@@ -12,6 +12,7 @@ class Register extends Component {
             password:'',
             miniBio:'',
             errorMessage: '',
+            camara: '',
             cargando: true
         }
     }
