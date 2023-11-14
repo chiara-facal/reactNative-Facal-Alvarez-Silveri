@@ -45,7 +45,6 @@ class NewPost extends Component {
     }
 
     render() {
-        console.log(this.state.users);
         return (
           <View>
             <Text>PostForm</Text>
@@ -59,7 +58,7 @@ class NewPost extends Component {
               keyboardType="default"
               value={this.state.post}
             />
-            <TouchableOpacity style={styles.button} onPress={() => this.postear(owner, post, Date.now(), this.state.url)}>
+            <TouchableOpacity style={styles.button} onPress={() => this.postear()}>
               <Text style={styles.textButton}>Postear</Text>
             </TouchableOpacity>
             </>}

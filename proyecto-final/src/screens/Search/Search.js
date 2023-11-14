@@ -18,7 +18,7 @@ componentDidUpdate(){
         .then(usuariosOwner => {
             db.collection('users').where('userName', '==', this.state.busqueda).get()
                 .then(usuariosUsername => {
-                    const users = [];
+                    const users = []    ;
                     usuariosOwner.forEach(user => {
                         users.push({
                             id: user.id,
