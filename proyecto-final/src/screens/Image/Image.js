@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import MyCamera from '../../Components/MyCamera/Mycamera';
+// import firebase from 'firebase';
+import { auth, db } from '../../firebase/config';
 
 class Image extends Component{
     constructor(){
@@ -11,9 +13,17 @@ class Image extends Component{
         }
     }
     onImageUpload(url){
-        this.setState({ url: url , showCamera: false});
-        this.props.navigation.navigate('Menu')
-      }
+        if(url){
+            this.setState({ url: url , showCamera: false});
+            db.collection('users').doc(this.props.route.params.userId).update({
+                photo: url
+            })
+            .then(()=> {console.log("Foto agregada a firestore")})
+            .catch((error)=>{console.log(error)})
+            this.props.navigation.navigate('Menu')
+        }
+
+    }
 
     render(){
         return(
@@ -25,7 +35,7 @@ class Image extends Component{
            <TouchableOpacity onPress={() =>this.props.navigation.navigate('Menu') }>
             <Text>Dirigirme a Home</Text>
            </TouchableOpacity>
-            {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : <Text></Text>}
+            {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : null}
             </View>
  
         )

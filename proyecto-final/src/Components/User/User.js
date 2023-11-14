@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { TouchableOpacity, View, Text, FlatList } from 'react-native';
 import { auth, db} from '../../firebase/config';
-import firebase from 'firebase';
 
 class User extends Component{
     constructor(props){

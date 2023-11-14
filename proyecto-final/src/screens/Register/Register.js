@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
-import MyCamera from '../../Components/MyCamera/Mycamera';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 
 class Register extends Component {
@@ -12,13 +11,15 @@ class Register extends Component {
             password:'',
             miniBio:'',
             errorMessage: '',
-            cargando: true
+            cargando: true, 
+            foto_de_perfil: '',
+            userId: ''
         }
     }
     componentDidMount(){
         auth.onAuthStateChanged( user => {
             if( user ){
-                this.props.navigation.navigate('Image')
+                this.props.navigation.navigate('Image', {userID: this.state.userId})
             }else {
                 this.setState({cargando: false})
             }
@@ -27,7 +28,7 @@ class Register extends Component {
 
     }
 
-    register (email, pass, userName, miniBio){
+    register (email, pass, userName, miniBio, foto_de_perfil){
         this.setState({
             errorMessage: ''
         })
@@ -47,12 +48,13 @@ class Register extends Component {
                     owner: auth.currentUser.email,
                     userName: userName,
                     miniBio: miniBio,
-                    photo: this.state.url,
+                    photo: foto_de_perfil,
                     createdAt: Date.now()
                      
                 })
                 .then()
 
+                this.setState({ userId: response.user.uid });
 
             })
             .catch((error) => {
@@ -125,7 +127,7 @@ class Register extends Component {
                     <Text>{this.state.errorMessage}</Text>
                     : false
                 }
-                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio)}>
+                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.foto_de_perfil)}>
                     <Text style={styles.textButton}>Registrarse</Text>    
                 </TouchableOpacity>
                 <TouchableOpacity style = {styles.button} onPress={ () => this.props.navigation.navigate('Login')}>
