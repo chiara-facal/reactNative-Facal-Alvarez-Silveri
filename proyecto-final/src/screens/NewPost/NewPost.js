@@ -14,7 +14,11 @@ import MyCamera from '../../Components/MyCamera/Mycamera'
 class NewPost extends Component {
     constructor() {
         super();
-        this.state = { post: ""};
+        this.state = { 
+          post: "",
+          showCamera: true,
+          url: ''
+      };
     }
 
     postear(){
@@ -22,6 +26,7 @@ class NewPost extends Component {
             owner: auth.currentUser.email,
             post: this.state.post,
             likes: [],
+            comments: [],
             createdAt: Date.now()
         })
         .then( console.log("Posteaste correctamente"))
@@ -50,10 +55,7 @@ class NewPost extends Component {
               keyboardType="default"
               value={this.state.post}
             />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.postear()}
-            >
+            <TouchableOpacity style={styles.button} onPress={() => this.postear()}>
               <Text style={styles.textButton}>Postear</Text>
             </TouchableOpacity>
             </>}
