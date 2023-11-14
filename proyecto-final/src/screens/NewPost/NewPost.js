@@ -26,10 +26,14 @@ class NewPost extends Component {
             owner: auth.currentUser.email,
             post: this.state.post,
             likes: [],
+            url: this.state.url,
             comments: [],
             createdAt: Date.now()
         })
-        .then( console.log("Posteaste correctamente"))
+        .then( res => console.log(res),
+        
+        this.props.navigation.navigate('Home')
+        )
         .catch(error => console.log(`El error fue: ${error}`))
       }
 
@@ -55,7 +59,7 @@ class NewPost extends Component {
               keyboardType="default"
               value={this.state.post}
             />
-            <TouchableOpacity style={styles.button} onPress={() => this.postear()}>
+            <TouchableOpacity style={styles.button} onPress={() => this.postear(owner, post, Date.now(), this.state.url)}>
               <Text style={styles.textButton}>Postear</Text>
             </TouchableOpacity>
             </>}
