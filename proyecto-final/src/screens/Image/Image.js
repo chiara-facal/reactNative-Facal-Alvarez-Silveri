@@ -13,6 +13,7 @@ class Image extends Component{
         }
     }
     onImageUpload(url){
+        console.log(this.props.route.params.userId)
         if(url){
             this.setState({ url: url , showCamera: false});
             db.collection('users').doc(this.props.route.params.userId).update({

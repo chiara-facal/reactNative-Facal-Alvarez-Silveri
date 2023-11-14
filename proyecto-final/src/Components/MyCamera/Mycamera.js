@@ -60,7 +60,7 @@ class MyCamera extends Component {
 
     render(){
 
-        console.log(this.state.photo)
+        // console.log(this.state.photo)
         return (
             <>
                 {this.state.permisos ? 

@@ -19,7 +19,7 @@ class Register extends Component {
     componentDidMount(){
         auth.onAuthStateChanged( user => {
             if( user ){
-                this.props.navigation.navigate('Image', {userID: this.state.userId})
+                this.props.navigation.navigate('Menu')
             }else {
                 this.setState({cargando: false})
             }
@@ -43,7 +43,6 @@ class Register extends Component {
         auth.createUserWithEmailAndPassword(email, pass)
             .then( response => {
                 console.log('Registrado ok', response);
-
                 db.collection('users').add({
                     owner: auth.currentUser.email,
                     userName: userName,
@@ -52,10 +51,11 @@ class Register extends Component {
                     createdAt: Date.now()
                      
                 })
-                .then()
-
-                this.setState({ userId: response.user.uid });
-
+                .then(docRef => {
+                    this.setState({userId: docRef.id}, ()=>{
+                        this.props.navigation.navigate('Image', {userId: this.state.userId})
+                    })
+                })
             })
             .catch((error) => {
                 // console.log(error);
@@ -71,8 +71,6 @@ class Register extends Component {
                 } 
         })}
 
-
-        
     render(){
         if(this.state.cargando){
             return(
