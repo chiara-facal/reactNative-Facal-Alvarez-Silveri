@@ -32,7 +32,7 @@ render(){
             <Text>Email: {this.props.info.datos.owner}</Text>
             {this.props.info.datos.miniBio === "" ? 
             "": <Text>Mini bio: {this.props.info.datos.miniBio}</Text>} 
-            {this.props.info.datos.miniBio === "" ? "" :
+            {this.props.info.datos.photo === "" ? "" :
             <Image style={styles.camera}  source = {{uri: this.props.info.datos.photo}}/> }
             <Text>Cantidad de posteos: {this.props.posteos.length}</Text>
             {this.props.info.datos.owner == auth.currentUser.email ? 

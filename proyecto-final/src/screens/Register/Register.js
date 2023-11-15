@@ -83,7 +83,7 @@ class Register extends Component {
         }else{
         return(
             <View style={styles.formContainer}>
-                <Text>Registrarse</Text>
+                <Text style = {styles.title}>BEAT</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({email: text})}
@@ -106,13 +106,6 @@ class Register extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
-                {/* <TextInput
-                    style={styles.input}
-                    onChangeText={(text)=>this.setState({userName: text})}
-                    placeholder='Foto de perfil'
-                    keyboardType='default'
-                    value={this.state.photo}
-                    /> */}
         
                 <TextInput
                     style={styles.input}
@@ -131,6 +124,8 @@ class Register extends Component {
                 <TouchableOpacity style = {styles.button} onPress={ () => this.props.navigation.navigate('Login')}>
                    <Text style = {styles.textButton}>Ya tengo una cuenta</Text>
                 </TouchableOpacity>
+                <Text style = {styles.condiciones}> Al registrarte, aceptas nuestras políticas de Privacidad y Cookies</Text>
+                <Text style = {styles.footer}> Chiara Facal, Pedro Alvarez y Mateo Silveri - Programación III</Text>
             </View>
         )
     }}
@@ -138,13 +133,14 @@ class Register extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
+        flex: 1,
         paddingHorizontal:10,
         marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
     },
     input:{
-        height:20,
+        height:50,
         paddingVertical:15,
         paddingHorizontal: 10,
         borderWidth:1,
@@ -155,19 +151,34 @@ const styles = StyleSheet.create({
         width: 350
     },
     button:{
-        backgroundColor:'#28a745',
+        backgroundColor:'#0099CC',
         paddingHorizontal: 10,
-        paddingVertical: 6,
+        paddingVertical: 7,
         borderRadius:4, 
         borderWidth:1,
         borderStyle: 'solid',
-        borderColor: '#28a745',
-        margin: 3,
+        borderColor: '#0099CC',
+        margin: 10,
         width: 250,
+        alignItems: 'center',
+        height: 35
 
     },
     textButton:{
         color: '#fff'
+    }, 
+    title: {
+        fontSize: 100, 
+        fontFamily: "Pacifico",
+        margin: 20
+    }, 
+    condiciones: {
+        textAlign: 'center',
+        margin: 20
+    }, 
+    footer: {
+        textAlign: 'center',
+        marginTop: 100
     }
 
 })

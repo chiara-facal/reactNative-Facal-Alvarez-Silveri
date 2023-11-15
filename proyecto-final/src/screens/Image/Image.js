@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import MyCamera from '../../Components/MyCamera/Mycamera';
 // import firebase from 'firebase';
 import { auth, db } from '../../firebase/config';
@@ -28,13 +28,13 @@ class Image extends Component{
 
     render(){
         return(
-            <View>
-           <Text>¿Desea sacarse una foto de perfil?</Text>
-            <TouchableOpacity onPress={() =>this.setState({showCamera: true}) }>
-            <Text>Agregar foto</Text>
+            <View style = {styles.formContainer}>
+           <Text style ={styles.text}>¿Desea sacarse una foto de perfil?</Text>
+            <TouchableOpacity styles = {styles.button} onPress={() =>this.setState({showCamera: true}) }>
+            <Text style = {styles.textButton}>Agregar foto</Text>
            </TouchableOpacity>
-           <TouchableOpacity onPress={() =>this.props.navigation.navigate('Menu') }>
-            <Text>Dirigirme a Home</Text>
+           <TouchableOpacity styles = {styles.button} onPress={() =>this.props.navigation.navigate('Menu') }>
+            <Text style = {styles.textButton}>Dirigirme a Home</Text>
            </TouchableOpacity>
             {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : null}
             </View>
@@ -42,5 +42,39 @@ class Image extends Component{
         )
     }
 }
+
+const styles = StyleSheet.create({
+    formContainer:{
+        flex: 1,
+        paddingHorizontal:10,
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text: {
+        height: 50,
+        margin: 20, 
+        marginTop: 70,
+        textAlign: center
+    },
+    button:{
+        backgroundColor:'#0099CC',
+        paddingHorizontal: 10,
+        paddingVertical: 7,
+        borderRadius:4, 
+        borderWidth:1,
+        borderStyle: 'solid',
+        borderColor: '#0099CC',
+        margin: 10,
+        width: 250,
+        alignItems: 'center',
+        height: 35
+
+    },
+    textButton:{
+        color: '#fff'
+    }
+})
+
 
 export default Image;

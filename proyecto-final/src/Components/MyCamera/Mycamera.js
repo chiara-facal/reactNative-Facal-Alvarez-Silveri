@@ -100,32 +100,29 @@ class MyCamera extends Component {
 
 const styles = StyleSheet.create({
     formContainer: {
+        flex: 1, 
         height: `60vh`,
         widht: `100vw`,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     camera: {
         widht: '100%',
         height: '100%',
     },
-    input: {
-      height: 20,
-      paddingVertical: 15,
-      paddingHorizontal: 10,
-      borderWidth: 1,
-      borderColor: "#ccc",
-      borderStyle: "solid",
-      borderRadius: 6,
-      marginVertical: 10,
-    },
     button: {
-      backgroundColor: "blue",
+      backgroundColor: "#0099CC",
       paddingHorizontal: 10,
       paddingVertical: 6,
       textAlign: "center",
       borderRadius: 4,
       borderWidth: 1,
       borderStyle: "solid",
-      borderColor: "#28a745",
+      borderColor: "#0099CC",
+      margin: 10,
+        width: 250,
+        alignItems: 'center',
+        height: 35
     },
     textButton: {
       color: "#fff",
