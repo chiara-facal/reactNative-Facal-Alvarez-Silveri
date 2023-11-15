@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         margin: 15,
         backgroundColor: 'lightgrey',
-        borderRadius: 5,
+        borderRadius: 6,
   
     },
     camera: {
