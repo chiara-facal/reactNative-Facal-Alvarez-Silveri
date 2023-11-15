@@ -47,7 +47,6 @@ class NewPost extends Component {
     render() {
         return (
           <View>
-            <Text>PostForm</Text>
 
             {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)}/> :
             <>

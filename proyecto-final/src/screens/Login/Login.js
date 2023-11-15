@@ -71,7 +71,7 @@ class Login extends Component {
         }else{
         return(
             <View style={styles.formContainer}>
-                <Text>Login</Text>
+                <Text style = {styles.title}>BEAT</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({email: text})}
@@ -91,9 +91,10 @@ class Login extends Component {
                 <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state.email, this.state.password)}>
                     <Text style={styles.textButton}>Ingresar</Text>    
                 </TouchableOpacity>
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Register')}>
-                   <Text>Registrarse</Text>
+                <TouchableOpacity style = {styles.button}onPress={ () => this.props.navigation.navigate('Register')}>
+                   <Text style = {styles.textButton}>¿No tienes cuenta? Registrarse</Text>
                 </TouchableOpacity>
+                <Text style = {styles.footer}> Chiara Facal, Pedro Alvarez y Mateo Silveri - Programación III</Text>
             </View>
         )
     }}
@@ -101,11 +102,14 @@ class Login extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
+        flex: 1, 
         paddingHorizontal:10,
         marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     input:{
-        height:20,
+        height:50,
         paddingVertical:15,
         paddingHorizontal: 10,
         borderWidth:1,
@@ -113,19 +117,34 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderRadius: 6,
         marginVertical:10,
+        width: 350
     },
     button:{
-        backgroundColor:'blue',
+        backgroundColor:'#0099CC',
         paddingHorizontal: 10,
         paddingVertical: 6,
         textAlign: 'center',
         borderRadius:4, 
         borderWidth:1,
         borderStyle: 'solid',
-        borderColor: '#28a745'
+        borderColor: '#0099CC',
+        margin: 10,
+        width: 250,
+        alignItems: 'center',
+        height: 35
     },
     textButton:{
         color: '#fff'
+    },
+    title: {
+        fontSize: 100, 
+        fontFamily: "Pacifico",
+        margin: 20,
+        marginBottom: 50
+    },
+    footer: {
+        textAlign: 'center',
+        marginTop: 200
     }
 
 })

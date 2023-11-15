@@ -14,10 +14,10 @@ class Search extends Component{
 
 buscador(){
 
-    db.collection('users').where('owner', '>=', this.state.busqueda).where('owner', '<=', this.state.busqueda + '\uf8ff').get()
-    .then(usuariosOwner => {
-        db.collection('users').where('userName', '>=', this.state.busqueda).where('userName', '<=',this.state.busqueda + '\uf8ff' ).get()
-            .then(usuariosUsername => {
+    db.collection('users').where('owner', '>=', this.state.busqueda).where('owner', '<=', this.state.busqueda + '\uf8ff').onSnapshot(
+    usuariosOwner => {
+        db.collection('users').where('userName', '>=', this.state.busqueda).where('userName', '<=',this.state.busqueda + '\uf8ff' ).onSnapshot(
+            (usuariosUsername => {
                 const users = []    ;
                 usuariosOwner.forEach(user => {
                     users.push({
@@ -26,14 +26,13 @@ buscador(){
                     });
                 });
                 usuariosUsername.forEach(doc => {
-                    if (users.includes(doc.id)){
                         users.push({
                             id: doc.id,
                             datos: doc.data()
                         });
                     }
                     
-                });
+                );
 
                 let filtrado = []
 
@@ -48,11 +47,12 @@ buscador(){
             })
             .catch(error => {
                 console.error(error);
-            });
+            }));
     })
     .catch(error => {
         console.error(error);
     });
+    
     
 }
     
@@ -61,7 +61,7 @@ buscador(){
         return(
             <View>
                  <TextInput
-                    onChangeText={(text)=>(this.setState({busqueda: text}), this.buscador)}
+                    onChangeText={(text)=>{this.setState({busqueda: text}), this.buscador()}}
                     placeholder='Buscar usuario o email'
                     keyboardType='default'
                     value={this.state.busqueda}
