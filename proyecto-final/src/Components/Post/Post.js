@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image, StyleSheet} from 'react-native';
 
 class Post extends Component {
     constructor(props){
@@ -12,6 +12,7 @@ class Post extends Component {
             return (
                 <View>
                         <Text>{this.props.infoPost.datos.owner}</Text>
+                        <Image style={styles.camera} source = {{uri:this.props.infoPost.datos.url}}/>
                         <Text>{this.props.infoPost.datos.post}</Text>
                 </View>
                )
@@ -21,5 +22,12 @@ class Post extends Component {
 
 }
 
+const styles = StyleSheet.create({
+    camera: {
+        width: '100%',
+        height: '60vh'
+    }
+}
+)
 
 export default Post;

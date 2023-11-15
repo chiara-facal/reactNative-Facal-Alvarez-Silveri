@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, View, Text, FlatList } from 'react-native';
+import { TouchableOpacity, View, Text, FlatList, Image, StyleSheet} from 'react-native';
 import { auth, db} from '../../firebase/config';
 
 class User extends Component{
@@ -31,17 +31,23 @@ render(){
             <Text>Usuario: {this.props.info.datos.userName}</Text>
             <Text>Email: {this.props.info.datos.owner}</Text>
             {this.props.info.datos.miniBio === "" ? 
-            <Text></Text>: <Text>Mini bio: {this.props.info.datos.miniBio}</Text>} 
-         {/* Foto de perfil */} 
+            "": <Text>Mini bio: {this.props.info.datos.miniBio}</Text>} 
+            {this.props.info.datos.miniBio === "" ? "" :
+            <Image style={styles.camera}  source = {{uri: this.props.info.datos.photo}}/> }
             <Text>Cantidad de posteos: {this.props.posteos.length}</Text>
+            {this.props.info.datos.owner == auth.currentUser.email ? 
+            (<TouchableOpacity onPress={() => this.logOut()}>
+            <Text>Salir</Text>        
+            </TouchableOpacity>): ""}
             {this.props.posteos.length === 0?
-                (<Text></Text>):
+               "":
                 (<FlatList
                 data = {this.props.posteos}
                 keyExtractor={(post) => post.id}
                 renderItem = {({item}) => (
                     <View>
                         <Text>Posteos</Text>
+                        <Image style={styles.camera} source = {{uri:item.datos.url}}/>
                         <Text>Descripción: {item.datos.post}</Text>
                         {this.props.info.datos.owner == auth.currentUser.email ? 
                         (<TouchableOpacity onPress={() => this.borrarPost(item.id)}>
@@ -49,12 +55,16 @@ render(){
                         </TouchableOpacity>): ""}
                     </View>
                 )}/>)}
-            {this.props.info.datos.owner == auth.currentUser.email ? 
-            (<TouchableOpacity onPress={() => this.logOut()}>
-            <Text>Salir</Text>        
-            </TouchableOpacity>): ""}
         </View>
     ) }
  }
+
+ const styles = StyleSheet.create({
+    camera: {
+        width: '100%',
+        height: '60vh'
+    }
+}
+)
 
  export default User;
