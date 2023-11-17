@@ -71,11 +71,16 @@ class Post extends Component {
     render(){
             return (
                 <View style = {styles.formContainer}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")}>
-                        <Text>{this.props.infoPost.datos.owner}</Text>
+                    <TouchableOpacity onPress={() => {if (this.props.infoPost.datos.owner == auth.currentUser.email){
+                        this.props.navigation.navigate("Profile")
+                    }else{
+                        this.props.navigation.navigate('OtherProfile', {owner: this.props.infoPost.datos.owner})
+                    }}
+                       }>
+                        <Text style = {styles.usuario}>{this.props.infoPost.datos.owner}</Text>
                     </TouchableOpacity>
                     <Image style={styles.camera} source = {{uri:this.props.infoPost.datos.url}}/>
-                    <Text>Descripción: {this.props.infoPost.datos.post}</Text>
+                    <Text>{this.props.infoPost.datos.post}</Text>
 
                     {this.props.infoPost.datos.likes.length === 0 
                     ?
@@ -115,6 +120,7 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     formContainer: {
+        flex: 1,
         paddingTop: 5,
         paddingBottom: 10,
         paddingLeft: 10,
@@ -125,7 +131,7 @@ const styles = StyleSheet.create({
     },
     camera: {
         width: '100%',
-        height: '60vh'
+        height: 250
     },
     textButton: {
         color: "black",
@@ -140,6 +146,11 @@ const styles = StyleSheet.create({
         height: 20,
         width: 225,
       },
+    usuario: {
+        fontSize: 15,
+        margin: 3, 
+        fontWeight: 'bold'
+    }
 
 }
 )

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { auth, db } from '../../firebase/config';
-import { View, Text, ActivityIndicator, FlatList } from 'react-native';
+import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
 import User from '../../Components/User/User';
 
 
@@ -29,25 +29,26 @@ componentDidMount(){
                 this.setState({
                     infoUsuario: users
                 })
+                db.collection('posts').where('owner', '==', this.props.route.params.owner).onSnapshot(
+                    posteos => {
+                        let publicaciones = [];
+                        posteos.forEach(post =>
+                            {publicaciones.push({
+                                id: post.id,
+                                datos: post.data()
+                            })})
+                        this.setState({
+                            postUsuario: publicaciones
+                        })
+                    }
+                )
             }
             )
         } else{
             this.props.navigation.navigate('Login')
         }
 
-        db.collection('posts').where('owner', '==', this.props.route.params.owner).onSnapshot(
-            posteos => {
-                let publicaciones = [];
-                posteos.forEach(post =>
-                    {publicaciones.push({
-                        id: post.id,
-                        datos: post.data()
-                    })})
-                this.setState({
-                    postUsuario: publicaciones
-                })
-            }
-        )
+        
         
   
     }
@@ -57,7 +58,7 @@ componentDidMount(){
 }
 render(){
         return(
-            <View>
+            <View style = {styles.container}>
                 {this.state.infoUsuario.length === 0?
                 (<ActivityIndicator size='large' color='pink'/>):
                 (<FlatList
@@ -70,5 +71,12 @@ render(){
 }
 
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1, 
+    },
+  });
 
 export default OtherProfile;

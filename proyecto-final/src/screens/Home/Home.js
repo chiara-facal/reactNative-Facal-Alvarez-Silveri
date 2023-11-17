@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  FlatList 
-} from "react-native";
+import {View,FlatList, StyleSheet} from "react-native";
 import Post from "../../Components/Post/Post";
 import { auth, db } from "../../firebase/config";
 
@@ -46,7 +43,7 @@ class Home extends Component {
 render() {
 
     return (
-      <View>
+      <View style = {styles.container}>
       <FlatList 
           data= {this.state.listaPost}
           keyExtractor={ unPost => unPost.id }
@@ -55,5 +52,11 @@ render() {
     </View>
   )
 }}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+  },
+});
 
 export default Home;

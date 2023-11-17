@@ -13,7 +13,6 @@ class Image extends Component{
         }
     }
     onImageUpload(url){
-        console.log(this.props.route.params.userId)
         if(url){
             this.setState({ url: url , showCamera: false});
             db.collection('users').doc(this.props.route.params.userId).update({
@@ -30,10 +29,10 @@ class Image extends Component{
         return(
             <View style = {styles.formContainer}>
            <Text style ={styles.text}>¿Desea sacarse una foto de perfil?</Text>
-            <TouchableOpacity styles = {styles.button} onPress={() =>this.setState({showCamera: true}) }>
+            <TouchableOpacity style = {styles.button} onPress={() =>this.setState({showCamera: true}) }>
             <Text style = {styles.textButton}>Agregar foto</Text>
            </TouchableOpacity>
-           <TouchableOpacity styles = {styles.button} onPress={() =>this.props.navigation.navigate('Menu') }>
+           <TouchableOpacity style = {styles.button} onPress={() =>this.props.navigation.navigate('Menu') }>
             <Text style = {styles.textButton}>Dirigirme a Home</Text>
            </TouchableOpacity>
             {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : null}
@@ -65,14 +64,14 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderStyle: 'solid',
         borderColor: '#0099CC',
-        margin: 10,
+        margin: 30,
         width: 250,
         alignItems: 'center',
         height: 35
 
     },
     textButton:{
-        color: '#fff'
+        color: 'black'
     }
 })
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { auth, db } from '../../firebase/config';
-import { View, Text, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, ActivityIndicator, FlatList, StyleSheet} from 'react-native';
 import User from '../../Components/User/User';
 
 
@@ -57,7 +57,7 @@ componentDidMount(){
 }
 render(){
         return(
-            <View>
+            <View style = {styles.container}>
                 <Text>Mi perfil</Text>
                 {this.state.infoUsuario.length === 0?
                 (<ActivityIndicator size='large' color='pink'/>):
@@ -71,5 +71,12 @@ render(){
 }
 
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1, 
+    },
+  });
 
 export default Profile;

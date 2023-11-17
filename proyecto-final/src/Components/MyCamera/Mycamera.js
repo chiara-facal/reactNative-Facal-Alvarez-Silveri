@@ -83,10 +83,7 @@ class MyCamera extends Component {
                         >
                         <Text style={styles.textButton}>Aceptar</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                         onPress={() => this.rechazarFoto()}
-                        >
+                    <TouchableOpacity style={styles.button} onPress={() => this.rechazarFoto()}>
                         <Text style={styles.textButton}>Rechazar</Text>
                     </TouchableOpacity>
                 </View>
@@ -101,13 +98,13 @@ class MyCamera extends Component {
 const styles = StyleSheet.create({
     formContainer: {
         flex: 1, 
-        height: `60vh`,
-        widht: `100vw`,
+        height: `100%`,
+        width: `100%`,
         alignItems: 'center',
         justifyContent: 'center'
     },
     camera: {
-        widht: '100%',
+        width: '100%',
         height: '100%',
     },
     button: {
