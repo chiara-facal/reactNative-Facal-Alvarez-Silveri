@@ -79,11 +79,11 @@ class Post extends Component {
 
                     {this.props.infoPost.datos.likes.length === 0 
                     ?
-                    <TouchableOpacity onPress={() => this.likear()}>
+                    <TouchableOpacity onPress={() => this.like()}>
                         <Text style = {styles.textButton}>Likes: <AntDesign name="like2" size={24} color="black" /> {this.props.infoPost.datos.likes.length}</Text>
                     </TouchableOpacity>
                     :
-                    <TouchableOpacity onPress={() => this.desLikear()}>
+                    <TouchableOpacity onPress={() => this.unLike()}>
                         <Text style = {styles.textButton}>Likes: <AntDesign name="dislike2" size={24} color="black" /> {this.props.infoPost.datos.likes.length}</Text>
                     </TouchableOpacity>}
                 
