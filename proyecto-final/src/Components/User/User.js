@@ -27,31 +27,32 @@ borrarPost(id){
 
 render(){
     return(
-        <View>
-            <Text>Usuario: {this.props.info.datos.userName}</Text>
-            <Text>Email: {this.props.info.datos.owner}</Text>
+        <View style = {styles.container}>
+            <View style= {styles.photoContainer}>
+            {this.props.info.datos.photo === "" ? <Image style = {styles.profile} source = {{uri: 'https://definicion.de/wp-content/uploads/2019/07/perfil-de-usuario.png'}}/> :
+            <Image style={styles.profile}  source = {{uri: this.props.info.datos.photo}}/> }
+            </View>
+            <Text style = {styles.usuario}>{this.props.info.datos.userName}</Text>
+            <Text style = {styles.text}>{this.props.info.datos.owner}</Text>
             {this.props.info.datos.miniBio === "" ? 
-            "": <Text>Mini bio: {this.props.info.datos.miniBio}</Text>} 
-            {this.props.info.datos.photo === "" ? "" :
-            <Image style={styles.camera}  source = {{uri: this.props.info.datos.photo}}/> }
-            <Text>Cantidad de posteos: {this.props.posteos.length}</Text>
+            "": <Text  style = {styles.text}>{this.props.info.datos.miniBio}</Text>} 
+            <Text  style = {styles.text}>{this.props.posteos.length} posteos</Text>
             {this.props.info.datos.owner == auth.currentUser.email ? 
-            (<TouchableOpacity onPress={() => this.logOut()}>
-            <Text>Salir</Text>        
+            (<TouchableOpacity style = {styles.button} onPress={() => this.logOut()}>
+            <Text style = {styles.textButton} >Salir</Text>        
             </TouchableOpacity>): ""}
             {this.props.posteos.length === 0?
                "":
-                (<FlatList
+               (<FlatList
                 data = {this.props.posteos}
                 keyExtractor={(post) => post.id}
                 renderItem = {({item}) => (
-                    <View>
-                        <Text>Posteos</Text>
+                    <View style = {styles.postContainer}>
                         <Image style={styles.camera} source = {{uri:item.datos.url}}/>
-                        <Text>Descripción: {item.datos.post}</Text>
+                        <Text style = {styles.text}>{item.datos.post}</Text>
                         {this.props.info.datos.owner == auth.currentUser.email ? 
-                        (<TouchableOpacity onPress={() => this.borrarPost(item.id)}>
-                        <Text>Borrar posteo</Text>        
+                        (<TouchableOpacity style = {styles.button} onPress={() => this.borrarPost(item.id)}>
+                        <Text style = {styles.textButton}>Borrar posteo</Text>        
                         </TouchableOpacity>): ""}
                     </View>
                 )}/>)}
@@ -61,8 +62,62 @@ render(){
 
  const styles = StyleSheet.create({
     camera: {
+        width: 370,
+        height: 300
+    },
+    photoContainer: {
+        width: 200, 
+        height: 200, 
+        borderRadius: 100, 
+        overflow: 'hidden', 
+
+    }, 
+    profile: {
         width: '100%',
-        height: '60vh'
+        height: '100%', 
+        resizeMode: 'cover'
+    }, 
+    container: {
+        flex: 1,
+        alignItems: 'center',  
+        justifyContent: 'center',  
+        marginTop: 10
+    }, 
+    text: {
+        fontSize: 20, 
+        margin: 3
+    },
+    usuario: {
+        fontSize: 20, 
+        margin: 3,
+        fontWeight: 'bold'
+    },
+    button:{
+        backgroundColor:'#0099CC',
+        paddingHorizontal: 10,
+        paddingVertical: 7,
+        borderRadius:4, 
+        borderWidth:1,
+        borderStyle: 'solid',
+        borderColor: '#0099CC',
+        margin: 10,
+        width: 250,
+        alignItems: 'center',
+        height: 35
+
+    },
+    textButton:{
+        color: '#fff'
+    }, 
+    postContainer: {
+        alignitems: 'center',
+        justifyContent: 'center',
+        paddingTop: 5,
+        paddingBottom: 10,
+        paddingLeft: 10,
+        margin: 15,
+        backgroundColor: 'lightgrey',
+        borderRadius: 6
     }
 }
 )

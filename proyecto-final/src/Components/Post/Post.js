@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   
     },
     camera: {
-        width: '100%',
+        width: '97%',
         height: 250
     },
     textButton: {
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
       },
     usuario: {
         fontSize: 15,
-        margin: 3, 
+        margin: 5, 
         fontWeight: 'bold'
     }
 

@@ -88,7 +88,7 @@ class MyCamera extends Component {
                     </TouchableOpacity>
                 </View>
                 :
-                <Text>Los permiso de camara no estan habilitados</Text>
+                <Text style = {styles.text}>Los permiso de camara no estan habilitados</Text>
                 }
             </>
         )
@@ -123,6 +123,12 @@ const styles = StyleSheet.create({
     textButton: {
       color: "#fff",
     },
+    text: {
+        fontSize: 30, 
+        justifyContent: 'center',
+        textAlign: 'center', 
+        margin: 50
+    }
   });
 
 

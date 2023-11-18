@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import MyCamera from '../../Components/MyCamera/Mycamera';
-// import firebase from 'firebase';
-import { auth, db } from '../../firebase/config';
+import { db } from '../../firebase/config';
 
 class Image extends Component{
     constructor(){

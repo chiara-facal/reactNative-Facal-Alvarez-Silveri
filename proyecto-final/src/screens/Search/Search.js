@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, TextInput, Text, FlatList, TouchableOpacity} from "react-native";
+import { View, TextInput, Text, FlatList, TouchableOpacity, StyleSheet} from "react-native";
 import {db} from '../../firebase/config';
 
 
@@ -58,8 +58,9 @@ buscador(){
     render(){
         console.log(this.state.resultados)
         return(
-            <View>
+            <View style = {styles.container}> 
                  <TextInput
+                    style={styles.input}
                     onChangeText={(text)=>{this.setState({busqueda: text}), this.buscador()}}
                     placeholder='Buscar usuario o email'
                     keyboardType='default'
@@ -72,7 +73,7 @@ buscador(){
                     data = {this.state.resultados}
                     keyExtractor={(user, index) => user.id + index}
                     renderItem = {({item}) => (
-                        <View>
+                        <View style = {styles.resultsContainer}>
                             <TouchableOpacity onPress={() =>this.props.navigation.navigate('OtherProfile', {owner: item.datos.owner})}>
                                 <Text>{item.datos.owner} - {item.datos.userName}</Text>
                             </TouchableOpacity> 
@@ -83,5 +84,35 @@ buscador(){
         )
     }
 }
+const styles = StyleSheet.create({
+container: {
+    flex: 1,
+    alignItems: 'center',  
+    justifyContent: 'center',  
+    marginTop: 10, 
+    width: '100%'
+}, 
+input:{
+    height:50,
+    paddingVertical:15,
+    paddingHorizontal: 10,
+    borderWidth:1,
+    borderColor: '#0099CC',
+    borderStyle: 'solid',
+    borderRadius: 6,
+    marginVertical:10,
+    width: 350
+},
+resultsContainer: {
+    flex: 1, 
+    marginVertical: 10,
+    width: 350, 
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    borderRadius: 6,
+    alignItems: 'center'
+}
+})
 
 export default Search;
