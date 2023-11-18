@@ -93,7 +93,7 @@ class Post extends Component {
                     </TouchableOpacity>}
                 
                 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Comentario")}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Comentario", {id: this.props.infoPost.id})}>
                         <Text style = {styles.textButton}>Cantidad total de comentarios</Text>
                     </TouchableOpacity>
                     <View style={styles.seccionComments}>

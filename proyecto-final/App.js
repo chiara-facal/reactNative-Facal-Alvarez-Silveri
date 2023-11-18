@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Menu from './src/Components/Menu/Menu';
 import Image from './src/screens/Image/Image'
 import OtherProfile from './src/screens/OtherProfile/OtherProfile'
+import Comentario from './src/screens/Comentario/Comentario';
 
 export default function App() {
 
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name = "Image" component= {Image} options = {{headerShown: false}}/>
         <Stack.Screen name = "OtherProfile" component = {OtherProfile} optiones = {{headerShown: false}}/>
         <Stack.Screen name='Menu' component={Menu} options={ { headerShown: false } }/>
+        <Stack.Screen name = 'Comentario' component = {Comentario} options={{headerShown: false}}/>
         {/* Si implementamos tabnavigation para el resto de la app. El tercer componente debe ser una navegación que tenga a Home como primer screen */}
       </Stack.Navigator>
     </NavigationContainer>
