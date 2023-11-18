@@ -36,28 +36,27 @@ buscador(){
 
                 let filtrado = []
 
-                users.forEach(usuario => {
-                    if(filtrado.includes(usuario.id)){null}
-                    else{filtrado.push({id: usuario.id, datos: usuario.data()})}
-                })
-
-                this.setState({
-                    resultados: filtrado
-                });
+                users.forEach((usuario) => {
+                    if (
+                    filtrado.some(
+                    (item) => item.id == usuario.id))  
+                        {null} 
+                    else {
+                      filtrado.push({ id: usuario.id, datos: usuario.datos });
+                    }
+                  });
+                  
+                  this.setState({
+                    resultados: filtrado,
+                  });
             })
-            .catch(error => {
-                console.error(error);
-            }));
-    })
-    .catch(error => {
-        console.error(error);
-    });
-    
-    
+
+    )})
+   
 }
     
     render(){
-        {this.state.resultados}
+        console.log(this.state.resultados)
         return(
             <View>
                  <TextInput

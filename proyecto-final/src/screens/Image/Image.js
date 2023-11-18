@@ -28,6 +28,8 @@ class Image extends Component{
     render(){
         return(
             <View style = {styles.formContainer}>
+            {this.state.showCamera ? (<MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> ):
+            (<View>
            <Text style ={styles.text}>¿Desea sacarse una foto de perfil?</Text>
             <TouchableOpacity style = {styles.button} onPress={() =>this.setState({showCamera: true}) }>
             <Text style = {styles.textButton}>Agregar foto</Text>
@@ -35,8 +37,8 @@ class Image extends Component{
            <TouchableOpacity style = {styles.button} onPress={() =>this.props.navigation.navigate('Menu') }>
             <Text style = {styles.textButton}>Dirigirme a Home</Text>
            </TouchableOpacity>
-            {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : null}
-            </View>
+           </View>)}
+        </View>
  
         )
     }
@@ -54,7 +56,8 @@ const styles = StyleSheet.create({
         height: 50,
         margin: 20, 
         marginTop: 70,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: 20
     },
     button:{
         backgroundColor:'#0099CC',
