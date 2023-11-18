@@ -97,15 +97,14 @@ class MyCamera extends Component {
 
 const styles = StyleSheet.create({
     formContainer: {
-        flex: 1, 
-        height: `100%`,
-        width: `100%`,
+        height: 700,
+        width: 420,
         alignItems: 'center',
         justifyContent: 'center'
     },
     camera: {
-        width: '100%',
-        height: '100%',
+        width: 420,
+        height: 600,
     },
     button: {
       backgroundColor: "#0099CC",

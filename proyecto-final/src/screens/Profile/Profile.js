@@ -58,7 +58,6 @@ componentDidMount(){
 render(){
         return(
             <View style = {styles.container}>
-                <Text>Mi perfil</Text>
                 {this.state.infoUsuario.length === 0?
                 (<ActivityIndicator size='large' color='pink'/>):
                 (<FlatList
