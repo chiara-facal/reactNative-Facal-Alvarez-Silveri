@@ -1,5 +1,5 @@
 import react, { Component } from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import { db, auth } from '../../firebase/config';
 
 class Comentario extends Component {
@@ -34,7 +34,7 @@ class Comentario extends Component {
             comments: firebase.firestore.FieldValue.arrayUnion({ text: this.state.nuevoComentario, userEmail: auth.currentUser.email, createdAt: Date.now() })
         })
             .then(res => {
-                //this.state.comentarios.push({ text: this.state.textoComment, userEmail: auth.currentUser.email, createdAt: Date.now() })
+                
                 this.setState({
                     nuevoComentario: '',
                 })
@@ -53,16 +53,25 @@ class Comentario extends Component {
               data={this.state.comentarios} // Mostrar los comentarios en orden ascendente
               keyExtractor={(com)=> com.text + com.user}
               renderItem={({ item }) => (
-                <View style={styles.comentarioContainer}><TouchableOpacity onPress={() => this.props.navigation.navigate('OtherProfile', { userData: comment.item.userEmail, navigation: this.props.navigation })}></TouchableOpacity>
+                <View style={styles.comentarioContainer}><TouchableOpacity onPress={() => this.props.navigation.navigate('OtherProfile', { owner: comment.item.userEmail, navigation: this.props.navigation })}></TouchableOpacity>
                   <Text style={styles.autor}>{item.auth.currentUser.email}</Text>
                   <Text style={styles.texto}>{item.Text}</Text>
                 </View>
-              )}
-            />
-          )}
-  
+              )}/>)}
+            <View style={styles.seccionComments}>
+              <TextInput
+                style={styles.inputComments}
+                onChangeText={(text) => this.setState({ nuevoComentario: text })}
+                placeholder='Insertar comentario'
+                keyboardType='default'
+                value={this.state.nuevoComentario}
+              />
           
-  
+              {this.state.nuevoComentario === '' ? null : 
+                    <TouchableOpacity style={styles.botonComentar} onPress={() => this.guardarComment()}>
+                        <Text style={styles.textoBoton}>Comentar</Text>
+                    </TouchableOpacity>}
+            </View>
           {/* Botón para regresar a la página principal */}
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Text style={styles.textoRegresar}>Regresar</Text>
@@ -87,7 +96,7 @@ class Comentario extends Component {
       marginTop: 5,
     },
     seccionComments: {
-      marginTop: 20,
+      marginTop: 20
     },
     inputComments: {
       borderWidth: 1,

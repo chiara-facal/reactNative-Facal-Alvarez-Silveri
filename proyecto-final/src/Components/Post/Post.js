@@ -58,13 +58,14 @@ class Post extends Component {
 
     Comentario(){
         db.collection("posts").doc(this.props.infoPost.id).update({
-            comments: firebase.firestore.FieldValue.arrayUnion(this.state.comments)
+            comments: firebase.firestore.FieldValue.arrayUnion({userEmail: auth.currentUser.email,texto:this.state.comments})
         })
         .then(
             this.setState({
                 comments: ''
             })
         )
+        .catch(e => console.log(e))
     }
 
 
@@ -85,7 +86,7 @@ class Post extends Component {
                     {this.props.infoPost.datos.likes.length === 0 
                     ?
                     <TouchableOpacity onPress={() => this.like()}>
-                        <Text style = {styles.textButton}>Likes: <AntDesign name="heart-outline" size={24} color="black" /> {this.props.infoPost.datos.likes.length}</Text>
+                        <Text style = {styles.textButton}>Likes: <AntDesign name="hearto"  size={24} color="black" /> {this.props.infoPost.datos.likes.length}</Text>
                     </TouchableOpacity>
                     :
                     <TouchableOpacity onPress={() => this.unLike()}>
