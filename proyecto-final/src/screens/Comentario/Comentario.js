@@ -1,6 +1,7 @@
 import react, { Component } from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import { db, auth } from '../../firebase/config';
+import firebase from 'firebase';
 
 class Comentario extends Component {
     constructor(props) {
@@ -13,13 +14,16 @@ class Comentario extends Component {
     }
   
     componentDidMount(){
-        db.collection('posts').where('id', '==', this.props.route.params.id).orderBy('createdAt', 'desc').onSnapshot(
+        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
             comentario => {
                 let showComments = [];
                 comentario.forEach( unComentario => {
+                    if(this.props.route.params.id === unComentario.id){
                         showComments.push({
                             datos: unComentario.data()
                         })
+                    }
+
                     
                 })
                 this.setState({
@@ -28,10 +32,11 @@ class Comentario extends Component {
             }
         )
     }
+    
 
     guardarComment() {
         db.collection('posts').doc(this.props.route.params.id).update({
-            comments: firebase.firestore.FieldValue.arrayUnion({ text: this.state.nuevoComentario, userEmail: auth.currentUser.email, createdAt: Date.now() })
+            comments: firebase.firestore.FieldValue.arrayUnion({ userEmail: auth.currentUser.email, text: this.state.nuevoComentario})
         })
             .then(res => {
                 
@@ -50,12 +55,14 @@ class Comentario extends Component {
             <Text>Aún no hay comentarios</Text>
           ) : (
             <FlatList
-              data={this.state.comentarios} // Mostrar los comentarios en orden ascendente
+              data={this.state.comentarios} 
               keyExtractor={(com)=> com.text + com.user}
               renderItem={({ item }) => (
-                <View style={styles.comentarioContainer}><TouchableOpacity onPress={() => this.props.navigation.navigate('OtherProfile', { owner: comment.item.userEmail, navigation: this.props.navigation })}></TouchableOpacity>
-                  <Text style={styles.autor}>{item.auth.currentUser.email}</Text>
-                  <Text style={styles.texto}>{item.Text}</Text>
+                <View style={styles.comentarioContainer}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('OtherProfile', { owner: item.userEmail, navigation: this.props.navigation })}>
+                    <Text style={styles.autor}>{item.userEmail}</Text>
+                    </TouchableOpacity>
+                  <Text style={styles.texto}>{item.text}</Text>
                 </View>
               )}/>)}
             <View style={styles.seccionComments}>
@@ -73,8 +80,8 @@ class Comentario extends Component {
                     </TouchableOpacity>}
             </View>
           {/* Botón para regresar a la página principal */}
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <Text style={styles.textoRegresar}>Regresar</Text>
+          <TouchableOpacity  style = {styles.botonComentar} onPress={() => this.props.navigation.goBack()}>
+            <Text style={styles.textoBoton}>Regresar</Text>
           </TouchableOpacity>
         </View>
       );
@@ -91,9 +98,11 @@ class Comentario extends Component {
     },
     autor: {
       fontWeight: 'bold',
+      fontSize: 20
     },
     texto: {
       marginTop: 5,
+      fontSize: 20
     },
     seccionComments: {
       marginTop: 20
@@ -106,10 +115,11 @@ class Comentario extends Component {
       marginBottom: 10,
     },
     botonComentar: {
-      backgroundColor: 'blue',
+      backgroundColor: '#0099CC',
       padding: 10,
       borderRadius: 5,
       alignItems: 'center',
+      margin: 10
     },
     textoBoton: {
       color: 'white',
