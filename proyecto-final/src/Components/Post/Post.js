@@ -15,6 +15,7 @@ class Post extends Component {
             likes: '',
             comments: '',
             cantidadLikes: this.props.infoPost.datos.likes.length,
+            like: false
         }
     }
 
@@ -35,7 +36,7 @@ class Post extends Component {
         .then( res =>
             this.setState({
                 like: true,
-                cantidadLikes: this.props.infoPost.datos.likes.length,
+                cantidadLikes: this.props.infoPost.datos.likes.length
             })
         )
         .catch(e => console.log(e))
@@ -81,16 +82,14 @@ class Post extends Component {
                     <Image style={styles.camera} source = {{uri:this.props.infoPost.datos.url}}/>
                     <Text>{this.props.infoPost.datos.post}</Text>
 
-                    {this.props.infoPost.datos.likes.length === 0 
-                    ?
-                    <TouchableOpacity onPress={() => this.like()}>
-                        <Text style = {styles.textButton}>Likes: <AntDesign name="heart"  size={24} color="black" /> {this.state.cantidadLikes}</Text>
-                    </TouchableOpacity>
-                    :
+                    {this.state.like ?
                     <TouchableOpacity onPress={() => this.unLike()}>
-                        <Text style = {styles.textButton}>Likes: <AntDesign name="hearto" size={24} color="black" /> {this.state.cantidadLikes}</Text>
+                    <Text style = {styles.textButton}>Likes: <AntDesign name="heart" size={24} color="black" /> {this.state.cantidadLikes}</Text>
+                </TouchableOpacity>
+                :
+                    <TouchableOpacity onPress={() => this.like()}>
+                        <Text style = {styles.textButton}>Likes: <AntDesign name="hearto"  size={24} color="black" /> {this.state.cantidadLikes}</Text>
                     </TouchableOpacity>}
-                
                 
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("Comentario", {id: this.props.infoPost.id})}>
                         <Text style = {styles.textButton}>Ver todos los comentarios</Text>
