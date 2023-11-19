@@ -63,7 +63,7 @@ render(){
                 (<FlatList
                 data = {this.state.infoUsuario}
                 keyExtractor={user => user.id}
-                renderItem = {({item}) => <User info = {item} posteos = {this.state.postUsuario}/>}/>)}
+                renderItem = {({item}) => <User info = {item} posteos = {this.state.postUsuario} navigation={this.props.navigation}/>}/>)}
             </View>
 )
     
