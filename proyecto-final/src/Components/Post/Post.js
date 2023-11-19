@@ -14,22 +14,16 @@ class Post extends Component {
             email: '',
             likes: '',
             comments: '',
+            cantidadLikes: this.props.infoPost.datos.likes.length,
         }
     }
 
     componentDidMount(){
-        let likes = this.props.infoPost.datos.likes
-
-        if(likes.length === 0){
+        //indica si el post ya fue likeado o no.
+        if (this.props.infoPost.datos.likes.includes(auth.currentUser.email)) {
             this.setState({
-                like: false
+                like: true
             })
-        }
-
-        if (likes.length >0) {
-            likes.forEach(like => {{if (like === auth.currentUser.email) {
-                this.setState({ like: true })
-            }}});
         }
     }
 
@@ -38,22 +32,26 @@ class Post extends Component {
         db.collection("posts").doc(this.props.infoPost.id).update({
             likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
         })
-        .then(
+        .then( res =>
             this.setState({
-                like: true
+                like: true,
+                cantidadLikes: this.props.infoPost.datos.likes.length,
             })
         )
+        .catch(e => console.log(e))
     }
 
     unLike(){
         db.collection("posts").doc(this.props.infoPost.id).update({
             likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
         })
-        .then(
+        .then( res =>
             this.setState({
-                like: false
+                like: false,
+                cantidadLikes: this.props.infoPost.datos.likes.length,
             })
         )
+        .catch(e => console.log(e))
     }
 
     Comentario(){
@@ -86,11 +84,11 @@ class Post extends Component {
                     {this.props.infoPost.datos.likes.length === 0 
                     ?
                     <TouchableOpacity onPress={() => this.like()}>
-                        <Text style = {styles.textButton}>Likes: <AntDesign name="hearto"  size={24} color="black" /> {this.props.infoPost.datos.likes.length}</Text>
+                        <Text style = {styles.textButton}>Likes: <AntDesign name="heart"  size={24} color="black" /> {this.state.cantidadLikes}</Text>
                     </TouchableOpacity>
                     :
                     <TouchableOpacity onPress={() => this.unLike()}>
-                        <Text style = {styles.textButton}>Likes: <AntDesign name="heart" size={24} color="black" /> {this.props.infoPost.datos.likes.length}</Text>
+                        <Text style = {styles.textButton}>Likes: <AntDesign name="hearto" size={24} color="black" /> {this.state.cantidadLikes}</Text>
                     </TouchableOpacity>}
                 
                 
