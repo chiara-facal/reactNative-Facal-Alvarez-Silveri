@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { TouchableOpacity, View, Text, FlatList, Image, StyleSheet} from 'react-native';
 import { auth, db} from '../../firebase/config';
 
+
 class User extends Component{
     constructor(props){
         super(props)
@@ -38,9 +39,15 @@ render(){
             "": <Text  style = {styles.text}>{this.props.info.datos.miniBio}</Text>} 
             <Text  style = {styles.text}>{this.props.posteos.length} posteos</Text>
             {this.props.info.datos.owner == auth.currentUser.email ? 
-            (<TouchableOpacity style = {styles.button} onPress={() => this.logOut()}>
+            (<View>
+            <TouchableOpacity style = {styles.button} onPress={() => this.logOut()}>
             <Text style = {styles.textButton} >Salir</Text>        
-            </TouchableOpacity>): ""}
+            </TouchableOpacity>
+            <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('CambiarContrasena')}>
+            <Text style = {styles.textButton}>Cambiar contraseña</Text>
+            </TouchableOpacity>
+                </View>)
+            : ""}
             {this.props.posteos.length === 0?
                "":
                (<FlatList
