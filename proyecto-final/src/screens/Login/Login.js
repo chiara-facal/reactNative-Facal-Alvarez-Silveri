@@ -29,12 +29,13 @@ class Login extends Component {
 
     login (email, pass){
         this.setState({
-            errorMessage: ''
+            errorMessage: '',
+            cargando: true
         })
         if(this.state.email == '' || this.state.email.includes("@") == false){
-            return this.setState({errorMessage: "Es obligatorio ingresar un mail"})
+            return this.setState({errorMessage: "Es obligatorio ingresar un mail",cargando: false})
         }else if(this.state.password == '' || this.state.password.length <6){
-            return this.setState({errorMessage: "Es obligatoria la contraseña"})
+            return this.setState({errorMessage: "Es obligatoria la contraseña",cargando: false})
         }
         auth.signInWithEmailAndPassword(email, pass)
             .then( response => {
@@ -48,13 +49,13 @@ class Login extends Component {
                     errorMessage: ''
                 })
                 if (error.code === 'auth/invalid-email') {
-                    return this.setState({ errorMessage: 'El correo electrónico no es válido' });
+                    return this.setState({ errorMessage: 'El correo electrónico no es válido' ,cargando: false});
                   } else if (error.code === 'auth/wrong-password'){
-                  return this.setState({ errorMessage: 'Email invalido, inténtelo nuevamente con un usuario existente.' });
+                  return this.setState({ errorMessage: 'Email invalido, inténtelo nuevamente con un usuario existente.' ,cargando: false});
                  } else if (error.code === 'auth/internal-error') {
-                 return this.setState({ errorMessage: 'El usuario y la contraseña no coinciden' });
+                 return this.setState({ errorMessage: 'El usuario y la contraseña no coinciden',cargando: false });
                  } else if (error.code === 'auth/wrong-password')
-                 { return this.setState({ errorMessage: 'Contraseña incorrecta' });
+                 { return this.setState({ errorMessage: 'Contraseña incorrecta',cargando: false });
                 }
                 });
     }
@@ -87,6 +88,13 @@ class Login extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
+                {this.state.cargando ? (
+                    <>
+                        <ActivityIndicator size="small" color="#fff" />
+                        <Text style={styles.textButton}>Cargando...</Text>
+                    </>
+                ) 
+                :''}
                 <Text>{this.state.errorMessage}</Text>
                 <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state.email, this.state.password)}>
                     <Text style={styles.textButton}>Ingresar</Text>    
