@@ -15,7 +15,8 @@ class Post extends Component {
             likes: '',
             comments: '',
             cantidadLikes: this.props.infoPost.datos.likes.length,
-            like: false
+            like: false,
+            comentarios: this.props.infoPost.datos.comments.slice(0,4)
         }
     }
 
@@ -57,7 +58,7 @@ class Post extends Component {
 
     Comentario(){
         db.collection("posts").doc(this.props.infoPost.id).update({
-            comments: firebase.firestore.FieldValue.arrayUnion({userEmail: auth.currentUser.email,texto:this.state.comments})
+            comments: firebase.firestore.FieldValue.arrayUnion({userEmail: auth.currentUser.email,text:this.state.comments})
         })
         .then(
             this.setState({
@@ -108,7 +109,26 @@ class Post extends Component {
                             </TouchableOpacity>
                         }
                     </View>
-                </View>
+                    <View>
+                        {this.props.infoPost.datos.comments && this.props.infoPost.datos.comments.length > 0 ?
+                            <FlatList
+                                data={this.state.comentarios}
+                                keyExtractor={key=> key.text + key.user}
+                                initialNumToRender={4}
+                                renderItem={(item) =>
+                                <View style={styles.mostrar}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('OtherProfile', { owner:item.item.userEmail, navigation:this.props.navigation})}>
+                                <Text style={styles.textButton}>{item.item.userEmail}:</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.textButton}>{item.item.text}</Text></View>}
+                            /> :null} 
+                            </View>
+
+
+                                
+
+
+                    </View>
                )
   
     }
