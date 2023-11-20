@@ -112,7 +112,7 @@ class Register extends Component {
                     />
                     {this.state.errorMessage !== '' ?
                     <Text>{this.state.errorMessage}</Text>
-                    : false
+                    : null
                 }
                 <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.foto_de_perfil)}
                 disabled={this.state.cargando}>
