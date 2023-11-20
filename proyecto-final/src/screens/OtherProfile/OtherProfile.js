@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { auth, db } from '../../firebase/config';
-import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, FlatList, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import User from '../../Components/User/User';
 
 
@@ -59,6 +59,9 @@ componentDidMount(){
 render(){
         return(
             <View style = {styles.container}>
+                <TouchableOpacity style = {styles.button}onPress={() => this.props.navigation.goBack()}>
+                <Text style={styles.textButton}>Regresar</Text>
+            </TouchableOpacity>
                 {this.state.infoUsuario.length === 0?
                 (<ActivityIndicator size='large' color='pink'/>):
                 (<FlatList
@@ -79,6 +82,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
     },
+    button:{
+        backgroundColor:'#0099CC',
+        paddingHorizontal: 10,
+        paddingVertical: 7,
+        borderRadius:4, 
+        borderWidth:1,
+        borderStyle: 'solid',
+        borderColor: '#0099CC',
+        margin: 10,
+        width: 250,
+        alignItems: 'center',
+        height: 35
+
+    },
+    textButton:{
+        color: '#fff'
+    }
   });
 
 export default OtherProfile;

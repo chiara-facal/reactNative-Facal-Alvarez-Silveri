@@ -112,7 +112,7 @@ class Register extends Component {
                     />
                     {this.state.errorMessage !== '' ?
                     <Text>{this.state.errorMessage}</Text>
-                    : false
+                    : null
                 }
                 {this.state.cargando ? (
                     <>
