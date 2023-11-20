@@ -61,15 +61,6 @@ class Login extends Component {
     }
 
     render(){
-        if(this.state.cargando){
-            return(
-                <View>
-                <ActivityIndicator size='large' color='pink'/>
-                <Text>Cargando...</Text>
-                </View>
-
-            )
-        }else{
         return(
             <View style={styles.formContainer}>
                 <Text style = {styles.title}>BEAT</Text>
@@ -91,10 +82,10 @@ class Login extends Component {
                 {this.state.cargando ? (
                     <>
                         <ActivityIndicator size="small" color="#fff" />
-                        <Text style={styles.textButton}>Cargando...</Text>
+                        <Text>Cargando...</Text>
                     </>
                 ) 
-                :''}
+                : null}
                 <Text>{this.state.errorMessage}</Text>
                 <TouchableOpacity style={styles.button} onPress={()=>this.login(this.state.email, this.state.password)}>
                     <Text style={styles.textButton}>Ingresar</Text>    
@@ -106,7 +97,7 @@ class Login extends Component {
             </View>
         )
     }}
-}
+
 
 const styles = StyleSheet.create({
     formContainer:{

@@ -117,10 +117,10 @@ class Register extends Component {
                 {this.state.cargando ? (
                     <>
                         <ActivityIndicator size="small" color="#fff" />
-                        <Text style={styles.textButton}>Cargando...</Text>
+                        <Text style={styles.condiciones}>Cargando...</Text>
                     </>
                 ) 
-                :''}
+                :null}
                 <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.foto_de_perfil)}>
                     <Text style={styles.textButton}>Registrarse</Text>   
                 </TouchableOpacity>

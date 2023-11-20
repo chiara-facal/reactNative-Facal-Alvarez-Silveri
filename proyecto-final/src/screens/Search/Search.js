@@ -56,7 +56,6 @@ buscador(){
 }
     
     render(){
-        console.log(this.state.resultados)
         return(
             <View style = {styles.container}> 
                  <TextInput

@@ -36,7 +36,7 @@ render(){
             <Text style = {styles.usuario}>{this.props.info.datos.userName}</Text>
             <Text style = {styles.text}>{this.props.info.datos.owner}</Text>
             {this.props.info.datos.miniBio === "" ? 
-            "": <Text  style = {styles.text}>{this.props.info.datos.miniBio}</Text>} 
+            null: <Text  style = {styles.text}>{this.props.info.datos.miniBio}</Text>} 
             <Text  style = {styles.text}>{this.props.posteos.length} posteos</Text>
             {this.props.info.datos.owner == auth.currentUser.email ? 
             (<View>
@@ -47,9 +47,9 @@ render(){
             <Text style = {styles.textButton}>Cambiar contraseña</Text>
             </TouchableOpacity>
                 </View>)
-            : ""}
+            : null}
             {this.props.posteos.length === 0?
-               "":
+               null:
                (<FlatList
                 data = {this.props.posteos}
                 keyExtractor={(post) => post.id}
@@ -60,7 +60,7 @@ render(){
                         {this.props.info.datos.owner == auth.currentUser.email ? 
                         (<TouchableOpacity style = {styles.button} onPress={() => this.borrarPost(item.id)}>
                         <Text style = {styles.textButton}>Borrar posteo</Text>        
-                        </TouchableOpacity>): ""}
+                        </TouchableOpacity>): null}
                     </View>
                 )}/>)}
         </View>
