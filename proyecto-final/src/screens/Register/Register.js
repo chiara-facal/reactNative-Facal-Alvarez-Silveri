@@ -77,15 +77,6 @@ class Register extends Component {
     }
 
     render(){
-        if(this.state.cargando){
-            return(
-                <View>
-                <ActivityIndicator size='large' color='pink'/>
-                <Text>Cargando...</Text>
-                </View>
-
-            )
-        }else{
         return(
             <View style={styles.formContainer}>
                 <Text style = {styles.title}>BEAT</Text>
@@ -130,7 +121,8 @@ class Register extends Component {
                         <ActivityIndicator size="small" color="#fff" />
                         <Text style={styles.textButton}>Cargando...</Text>
                     </>
-                ) : (
+                ) 
+                : (
                     <Text style={styles.textButton}>Registrarse</Text>   
                 )} 
                 </TouchableOpacity>
@@ -142,7 +134,7 @@ class Register extends Component {
             </View>
         )
     }}
-}
+
 
 const styles = StyleSheet.create({
     formContainer:{
