@@ -30,7 +30,8 @@ class Register extends Component {
 
     register (email, pass, userName, miniBio, foto_de_perfil){
         this.setState({
-            errorMessage: ''
+            errorMessage: '',
+            cargando: true,
         })
         if(this.state.email == '' || this.state.email.includes("@") == false){
             return this.setState({errorMessage: "Es obligatorio ingresar un mail"})
@@ -68,8 +69,12 @@ class Register extends Component {
                     return this.setState({ errorMessage: 'El correo electrónico no es válido' })
                 } else {
                   return this.setState({ errorMessage: 'Hubo un error en el registro. Inténtalo de nuevo.' })
-                } 
-        })}
+                }
+        })
+        .finally(() => {
+            this.setState({ cargando: false });
+        });
+    }
 
     render(){
         if(this.state.cargando){
@@ -118,8 +123,16 @@ class Register extends Component {
                     <Text>{this.state.errorMessage}</Text>
                     : false
                 }
-                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.foto_de_perfil)}>
-                    <Text style={styles.textButton}>Registrarse</Text>    
+                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.foto_de_perfil)}
+                disabled={this.state.cargando}>
+                    {this.state.cargando ? (
+                    <>
+                        <ActivityIndicator size="small" color="#fff" />
+                        <Text style={styles.textButton}>Cargando...</Text>
+                    </>
+                ) : (
+                    <Text style={styles.textButton}>Registrarse</Text>   
+                )} 
                 </TouchableOpacity>
                 <TouchableOpacity style = {styles.button} onPress={ () => this.props.navigation.navigate('Login')}>
                    <Text style = {styles.textButton}>Ya tengo una cuenta</Text>
