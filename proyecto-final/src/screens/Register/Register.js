@@ -34,11 +34,11 @@ class Register extends Component {
             cargando: true,
         })
         if(this.state.email == '' || this.state.email.includes("@") == false){
-            return this.setState({errorMessage: "Es obligatorio ingresar un mail"})
+            return this.setState({errorMessage: "Es obligatorio ingresar un mail",cargando: false})
         }else if (this.state.userName == '') {
-            return this.setState({errorMessage:'Es obligatorio el nombre de usuario'})
+            return this.setState({errorMessage:'Es obligatorio el nombre de usuario',cargando: false})
         }else if (this.state.password == '' || this.state.password.length <6){
-            return this.setState({errorMessage: "Es obligatoria la contraseña"})
+            return this.setState({errorMessage: "Es obligatoria la contraseña",cargando: false})
         }
        
         auth.createUserWithEmailAndPassword(email, pass)
@@ -64,11 +64,11 @@ class Register extends Component {
                     errorMessage: ''
                 })
                 if (error.code === 'auth/email-already-in-use') {
-                    return this.setState({errorMessage: 'El email introducido ya esta en uso'})
+                    return this.setState({errorMessage: 'El email introducido ya esta en uso',cargando: false})
                 } else if (error.code === 'auth/invalid-email') {
-                    return this.setState({ errorMessage: 'El correo electrónico no es válido' })
+                    return this.setState({ errorMessage: 'El correo electrónico no es válido',cargando: false})
                 } else {
-                  return this.setState({ errorMessage: 'Hubo un error en el registro. Inténtalo de nuevo.' })
+                  return this.setState({ errorMessage: 'Hubo un error en el registro. Inténtalo de nuevo.',cargando: false})
                 }
         })
         .finally(() => {
@@ -114,17 +114,15 @@ class Register extends Component {
                     <Text>{this.state.errorMessage}</Text>
                     : null
                 }
-                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.foto_de_perfil)}
-                disabled={this.state.cargando}>
-                    {this.state.cargando ? (
+                {this.state.cargando ? (
                     <>
                         <ActivityIndicator size="small" color="#fff" />
                         <Text style={styles.textButton}>Cargando...</Text>
                     </>
                 ) 
-                : (
+                :''}
+                <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName, this.state.miniBio, this.state.foto_de_perfil)}>
                     <Text style={styles.textButton}>Registrarse</Text>   
-                )} 
                 </TouchableOpacity>
                 <TouchableOpacity style = {styles.button} onPress={ () => this.props.navigation.navigate('Login')}>
                    <Text style = {styles.textButton}>Ya tengo una cuenta</Text>
